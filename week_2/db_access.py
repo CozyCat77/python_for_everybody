@@ -9,11 +9,9 @@ cur.execute("""
 DROP TABLE IF EXISTS Users  
             """)
 
-cur.execute('''
-CREATE TABLE Users (
-    name TEXT,
-)
-            ''')
+cur.execute("""
+CREATE TABLE Users (name TEXT)
+            """)
 
 # get the the url 
 url = "https://py4e-data.dr-chuck.net/known_by_Montgomery.html"
@@ -30,12 +28,15 @@ for tag in tags:
     names.append(tag.contents[0])
 
 for name in names:
-    cur.execute('''
+    cur.execute("""
         INSERT INTO Users (name) VALUES (?)
-                ''', (name))
-    
+                """, (name,))
     conn.commit()
     
 query = 'SELECT * FROM Users'
 
 for row in cur.execute(query):
+    print(str(row[0]))
+
+
+cur.close()
